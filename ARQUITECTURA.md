@@ -1,4 +1,4 @@
-# 🏗️ ARQUITECTURA DEL SISTEMA
+#  ARQUITECTURA DEL SISTEMA
 ## Dashboard de Hidrocarburos - Guatemala
 
 ```

@@ -83,22 +83,22 @@ with st.sidebar:
     st.image("https://via.placeholder.com/300x100/1f77b4/ffffff?text=Hidrocarburos+GT", 
              use_container_width=True)
     
-    st.markdown("## 🎨 Configuración")
+    st.markdown("##  Configuración")
     
     # Selección de vista
     vista = st.radio(
         "Selecciona la vista:",
-        ["📊 Exploración de Datos", "🤖 Modelos Predictivos", "📈 Comparación de Modelos"]
+        [" Exploración de Datos", " Modelos Predictivos", " Comparación de Modelos"]
     )
     
     st.markdown("---")
     
     # Información
-    with st.expander("ℹ️ Acerca del Dashboard"):
+    with st.expander(" Acerca del Dashboard"):
         st.markdown(TEXTS['about'])
         st.caption(TEXTS['data_source'])
     
-    with st.expander("🎨 Paleta de Colores"):
+    with st.expander(" Paleta de Colores"):
         st.markdown(COLOR_JUSTIFICATION)
 
 # Cargar datos
@@ -107,15 +107,15 @@ loader, df_imp, df_cons = load_all_data()
 # ============================================================================
 # VISTA 1: EXPLORACIÓN DE DATOS
 # ============================================================================
-if vista == "📊 Exploración de Datos":
-    st.markdown("## 📊 Exploración Interactiva de Datos")
+if vista == " Exploración de Datos":
+    st.markdown("##  Exploración Interactiva de Datos")
     
     # Tabs principales
     tab1, tab2, tab3, tab4 = st.tabs([
-        "📈 Series Temporales", 
-        "📊 Análisis Agregado",
-        "🔍 Análisis Detallado",
-        "📉 Distribuciones"
+        " Series Temporales", 
+        " Análisis Agregado",
+        " Análisis Detallado",
+        " Distribuciones"
     ])
     
     # TAB 1: Series Temporales
@@ -152,7 +152,7 @@ if vista == "📊 Exploración de Datos":
             st.plotly_chart(fig, use_container_width=True)
         
         # Gráfico enlazado: Todos los productos
-        st.markdown("#### 🔗 Vista Enlazada: Todos los Productos")
+        st.markdown("####  Vista Enlazada: Todos los Productos")
         df_display = df_imp if tipo_dato != "Consumo" else df_cons
         fig_all = create_time_series_plot(
             df_display,
@@ -213,11 +213,11 @@ if vista == "📊 Exploración de Datos":
         df_detalle = df_imp if tipo_detalle == "Importación" else df_cons
         
         # Estadísticas descriptivas
-        st.markdown("#### 📊 Estadísticas Descriptivas")
+        st.markdown("####  Estadísticas Descriptivas")
         st.dataframe(df_detalle.describe().T, use_container_width=True)
         
         # Matriz de correlación
-        st.markdown("#### 🔗 Matriz de Correlación")
+        st.markdown("####  Matriz de Correlación")
         fig_corr = create_correlation_heatmap(df_detalle)
         st.plotly_chart(fig_corr, use_container_width=True)
         
@@ -259,7 +259,7 @@ if vista == "📊 Exploración de Datos":
         st.plotly_chart(fig_dist, use_container_width=True)
         
         # Estadísticas adicionales
-        st.markdown("#### 📈 Estadísticas del Producto")
+        st.markdown("####  Estadísticas del Producto")
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
@@ -274,11 +274,11 @@ if vista == "📊 Exploración de Datos":
 # ============================================================================
 # VISTA 2: MODELOS PREDICTIVOS
 # ============================================================================
-elif vista == "🤖 Modelos Predictivos":
-    st.markdown("## 🤖 Modelos Predictivos")
+elif vista == " Modelos Predictivos":
+    st.markdown("##  Modelos Predictivos")
     
     st.info("""
-    🎯 Esta sección permite explorar tres modelos predictivos diferentes:
+     Esta sección permite explorar tres modelos predictivos diferentes:
     - **Linear Regression**: Modelo de regresión lineal simple
     - **Random Forest**: Modelo de ensamble basado en árboles de decisión
     - **SARIMA**: Modelo estadístico para series de tiempo con estacionalidad
@@ -306,7 +306,7 @@ elif vista == "🤖 Modelos Predictivos":
     serie_nombre = f'{tipo_pred} {producto_pred}'
     
     # Entrenar modelos (con cache)
-    with st.spinner('🔄 Entrenando modelos...'):
+    with st.spinner(' Entrenando modelos...'):
         resultados = train_all_models(df_imp, df_cons)
     
     # Obtener resultados
@@ -318,7 +318,7 @@ elif vista == "🤖 Modelos Predictivos":
         predictions = trainer.get_predictions(serie_nombre, modelo_pred)
         
         # Mostrar métricas
-        st.markdown(f"### 📊 Métricas del Modelo: {modelo_pred}")
+        st.markdown(f"###  Métricas del Modelo: {modelo_pred}")
         
         modelo_metrics = df_metrics[df_metrics['Modelo'] == modelo_pred].iloc[0]
         
@@ -336,13 +336,13 @@ elif vista == "🤖 Modelos Predictivos":
             st.metric("RMSE (Test)", f"{rmse:,.2f}")
         
         # Gráfico de predicciones
-        st.markdown("### 📈 Predicciones vs Valores Reales")
+        st.markdown("### Predicciones vs Valores Reales")
         fig_pred = create_prediction_plot(predictions, serie_nombre, modelo_pred)
         if fig_pred:
             st.plotly_chart(fig_pred, use_container_width=True)
         
         # Gráfico enlazado: Scatter Real vs Predicho
-        st.markdown("### 🔗 Análisis de Ajuste del Modelo")
+        st.markdown("### Análisis de Ajuste del Modelo")
         col1, col2 = st.columns(2)
         
         with col1:
@@ -382,7 +382,7 @@ elif vista == "🤖 Modelos Predictivos":
 # VISTA 3: COMPARACIÓN DE MODELOS
 # ============================================================================
 else:  # Comparación de Modelos
-    st.markdown("## 📈 Comparación de Modelos")
+    st.markdown("##  Comparación de Modelos")
     
     st.info("""
     🔍 Esta sección permite comparar el desempeño de los tres modelos predictivos
@@ -405,7 +405,7 @@ else:  # Comparación de Modelos
     serie_comp = f'{tipo_comp} {producto_comp}'
     
     # Entrenar modelos
-    with st.spinner('🔄 Entrenando y comparando modelos...'):
+    with st.spinner(' Entrenando y comparando modelos...'):
         resultados = train_all_models(df_imp, df_cons)
     
     if serie_comp in resultados:
@@ -413,7 +413,7 @@ else:  # Comparación de Modelos
         trainer = resultados[serie_comp]['trainer']
         
         # Tabla comparativa
-        st.markdown("### 📊 Tabla Comparativa de Modelos")
+        st.markdown("###  Tabla Comparativa de Modelos")
         
         # Selector de modelos a comparar
         modelos_disponibles = df_metrics['Modelo'].tolist()
@@ -440,12 +440,12 @@ else:  # Comparación de Modelos
             )
             
             # Gráfico comparativo
-            st.markdown("### 📊 Visualización Comparativa")
+            st.markdown("###  Visualización Comparativa")
             fig_comp = create_metrics_comparison_plot(df_metrics_filtered)
             st.plotly_chart(fig_comp, use_container_width=True)
             
             # Análisis de mejores modelos
-            st.markdown("### 🏆 Análisis de Rendimiento")
+            st.markdown("###  Análisis de Rendimiento")
             
             col1, col2, col3 = st.columns(3)
             
@@ -474,7 +474,7 @@ else:  # Comparación de Modelos
                 """)
             
             # Comparación visual de predicciones
-            st.markdown("### 🔗 Comparación Visual de Predicciones")
+            st.markdown("###  Comparación Visual de Predicciones")
             
             modelo_viz = st.selectbox(
                 "Selecciona modelo para visualizar:",
@@ -487,12 +487,12 @@ else:  # Comparación de Modelos
                 st.plotly_chart(fig_viz, use_container_width=True)
         
         else:
-            st.warning("⚠️ Selecciona al menos un modelo para comparar")
+            st.warning(" Selecciona al menos un modelo para comparar")
 
 # Footer
 st.markdown("---")
 st.caption("""
-📚 **Laboratorio 11 - Data Science**  
+ **Laboratorio 11 - Data Science**  
 Universidad del Valle de Guatemala  
 Dashboard desarrollado con Streamlit y Plotly
 """)
